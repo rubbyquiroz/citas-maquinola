@@ -1,20 +1,39 @@
 package com.clinica.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+@Entity
+@Table(name = "citas")
 public class Cita {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private Long doctorId;
     private Long pacienteId;
     private LocalDate fecha;
     private LocalTime hora;
+
+    @Enumerated(EnumType.STRING)
     private EstadoCita estado;
+
     private String notas;
 
     // Campos transient para vista
+    @Transient
     private String nombreDoctor;
+    @Transient
     private String nombrePaciente;
 
     public Cita() {

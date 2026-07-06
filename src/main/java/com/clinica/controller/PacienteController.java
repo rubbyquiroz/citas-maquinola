@@ -5,7 +5,6 @@ import com.clinica.model.Doctor;
 import com.clinica.model.Paciente;
 import com.clinica.service.CitaService;
 import com.clinica.service.UsuarioService;
-import com.clinica.service.impl.MemoryUsuarioService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,13 +25,10 @@ public class PacienteController {
 
     private final CitaService citaService;
     private final UsuarioService usuarioService;
-    private final MemoryUsuarioService memoryUsuarioService;
 
-    public PacienteController(CitaService citaService, UsuarioService usuarioService,
-                              MemoryUsuarioService memoryUsuarioService) {
+    public PacienteController(CitaService citaService, UsuarioService usuarioService) {
         this.citaService = citaService;
         this.usuarioService = usuarioService;
-        this.memoryUsuarioService = memoryUsuarioService;
     }
 
     @GetMapping("/dashboard")
@@ -135,7 +131,8 @@ public class PacienteController {
     }
 
     private Long getPacienteId(String email) {
-        return memoryUsuarioService.findUserIdByEmail(email)
+        return usuarioService.findPacienteByEmail(email)
+                .map(Paciente::getId)
                 .orElse(null);
     }
 }

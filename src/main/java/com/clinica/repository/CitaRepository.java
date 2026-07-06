@@ -1,14 +1,20 @@
 package com.clinica.repository;
 
-/**
- * Interfaz para acceso a datos de Citas.
- * Preparada para implementación con Spring Data JPA (MySQL).
- * Por ahora, los datos se manejan en memoria via MemoryCitaService.
- */
-public interface CitaRepository {
-    // Métodos para futura implementación JPA
-    // List<Cita> findByDoctorId(Long doctorId);
-    // List<Cita> findByPacienteId(Long pacienteId);
-    // Cita findById(Long id);
-    // void save(Cita cita);
+import com.clinica.model.Cita;
+import com.clinica.model.EstadoCita;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+
+public interface CitaRepository extends JpaRepository<Cita, Long> {
+
+    List<Cita> findByPacienteIdAndEstadoNot(Long pacienteId, EstadoCita estado);
+
+    List<Cita> findByDoctorIdAndEstadoNot(Long doctorId, EstadoCita estado);
+
+    List<Cita> findByDoctorIdAndEstado(Long doctorId, EstadoCita estado);
+
+    boolean existsByDoctorIdAndFechaAndHoraAndEstadoNot(Long doctorId, LocalDate fecha, LocalTime hora, EstadoCita estado);
 }

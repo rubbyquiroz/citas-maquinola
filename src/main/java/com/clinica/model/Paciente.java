@@ -1,8 +1,22 @@
 package com.clinica.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "pacientes")
 public class Paciente {
 
+    @Id
+    private Long id;
+
+    @OneToOne
+    @MapsId
     private Usuario usuario;
+
     private String telefono;
 
     public Paciente() {

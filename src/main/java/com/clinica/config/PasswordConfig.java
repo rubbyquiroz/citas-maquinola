@@ -7,7 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * Configuración separada para romper el ciclo:
- * SecurityConfig → MemoryUsuarioService → PasswordEncoder
+ * SecurityConfig → JpaUsuarioService → PasswordEncoder
  */
 @Configuration
 public class PasswordConfig {
