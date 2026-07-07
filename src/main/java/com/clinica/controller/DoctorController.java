@@ -33,15 +33,15 @@ public class DoctorController {
     public String dashboard(Model model, Authentication auth) {
         Long doctorId = getDoctorId(auth.getName());
         if (doctorId == null) {
-            return "redirect:/login";
+            return "redirect:/signin";
         }
 
         Doctor doctor = usuarioService.findDoctorById(doctorId).orElse(null);
         if (doctor == null) {
-            return "redirect:/login";
+            return "redirect:/signin";
         }
 
-        List<Cita> citas = citaService.findCitasByDoctorId(doctorId);
+        List<Cita> citas = citaService.findCitasActivasByDoctorId(doctorId);
 
         model.addAttribute("doctor", doctor);
         model.addAttribute("citas", citas);
@@ -54,7 +54,7 @@ public class DoctorController {
                                 RedirectAttributes redirectAttributes) {
         Long doctorId = getDoctorId(auth.getName());
         if (doctorId == null) {
-            return "redirect:/login";
+            return "redirect:/signin";
         }
 
         boolean resultado = citaService.confirmarCita(citaId, doctorId);
@@ -66,13 +66,31 @@ public class DoctorController {
         return "redirect:/doctor/dashboard";
     }
 
+    @PostMapping("/completar-cita")
+    public String completarCita(@RequestParam Long citaId,
+                                Authentication auth,
+                                RedirectAttributes redirectAttributes) {
+        Long doctorId = getDoctorId(auth.getName());
+        if (doctorId == null) {
+            return "redirect:/signin";
+        }
+
+        boolean resultado = citaService.completarCita(citaId, doctorId);
+        if (resultado) {
+            redirectAttributes.addFlashAttribute("success", "Cita marcada como completada.");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "No se pudo completar la cita.");
+        }
+        return "redirect:/doctor/dashboard";
+    }
+
     @PostMapping("/cancelar-cita")
     public String cancelarCita(@RequestParam Long citaId,
                                Authentication auth,
                                RedirectAttributes redirectAttributes) {
         Long doctorId = getDoctorId(auth.getName());
         if (doctorId == null) {
-            return "redirect:/login";
+            return "redirect:/signin";
         }
 
         boolean resultado = citaService.cancelarCitaByDoctor(citaId, doctorId);
@@ -88,7 +106,7 @@ public class DoctorController {
     public String detallePaciente(@PathVariable Long id, Model model, Authentication auth) {
         Long doctorId = getDoctorId(auth.getName());
         if (doctorId == null) {
-            return "redirect:/login";
+            return "redirect:/signin";
         }
 
         Paciente paciente = usuarioService.findPacienteById(id).orElse(null);
@@ -96,7 +114,7 @@ public class DoctorController {
             return "redirect:/doctor/dashboard";
         }
 
-        List<Cita> citasPaciente = citaService.findCitasByPacienteId(id);
+        List<Cita> citasPaciente = citaService.findHistorialCitasByPacienteId(id);
         // Filtrar solo citas con este doctor
         citasPaciente.removeIf(c -> !c.getDoctorId().equals(doctorId));
 

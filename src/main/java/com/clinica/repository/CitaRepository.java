@@ -10,11 +10,16 @@ import java.util.List;
 
 public interface CitaRepository extends JpaRepository<Cita, Long> {
 
-    List<Cita> findByPacienteIdAndEstadoNot(Long pacienteId, EstadoCita estado);
+    List<Cita> findByPacienteId(Long pacienteId);
 
-    List<Cita> findByDoctorIdAndEstadoNot(Long doctorId, EstadoCita estado);
+    List<Cita> findByDoctorId(Long doctorId);
+
+    List<Cita> findByPacienteIdAndEstadoIn(Long pacienteId, List<EstadoCita> estados);
+
+    List<Cita> findByDoctorIdAndEstadoIn(Long doctorId, List<EstadoCita> estados);
 
     List<Cita> findByDoctorIdAndEstado(Long doctorId, EstadoCita estado);
 
-    boolean existsByDoctorIdAndFechaAndHoraAndEstadoNot(Long doctorId, LocalDate fecha, LocalTime hora, EstadoCita estado);
+    boolean existsByDoctorIdAndFechaAndHoraAndEstadoIn(
+            Long doctorId, LocalDate fecha, LocalTime hora, List<EstadoCita> estados);
 }

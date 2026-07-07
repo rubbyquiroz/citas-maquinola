@@ -20,7 +20,7 @@
                         <i class="bi bi-exclamation-triangle text-danger" style="font-size: 3rem;"></i>
                         <h1 class="text-danger display-4">Error</h1>
                         <p class="lead text-muted">Ha ocurrido un error inesperado.</p>
-                        <a href="<c:url value='/login'/>" class="btn btn-primary mt-3"><i class="bi bi-arrow-left me-1"></i>Volver al Login</a>
+                        <a href="<c:url value='/signin'/>" class="btn btn-primary mt-3"><i class="bi bi-arrow-left me-1"></i>Volver al Login</a>
                     </div>
                 </div>
             </div>

@@ -19,6 +19,7 @@
             <div class="navbar-nav ms-auto">
                 <a href="<c:url value='/paciente/dashboard'/>" class="nav-item nav-link text-light"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
                 <form action="<c:url value='/logout'/>" method="post" class="d-inline">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                     <button type="submit" class="btn btn-outline-light btn-sm ms-2"><i class="bi bi-box-arrow-right"></i> Cerrar Sesión</button>
                 </form>
             </div>
@@ -40,6 +41,7 @@
         <div class="card shadow">
             <div class="card-body">
                 <form action="<c:url value='/paciente/agendar'/>" method="post">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                     <div class="mb-3">
                         <label for="doctorId" class="form-label"><i class="bi bi-person-badge me-1"></i> Seleccione un Doctor</label>
                         <select class="form-select" id="doctorId" name="doctorId" required>

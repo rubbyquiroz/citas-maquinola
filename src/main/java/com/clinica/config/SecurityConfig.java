@@ -52,10 +52,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
-                        .requestMatchers("/signin", "/do-login", "/resources/**").permitAll()
+                        .requestMatchers("/", "/signin", "/do-login", "/resources/**").permitAll()
                         .requestMatchers("/error", "/acceso-denegado").permitAll()
                         .requestMatchers("/paciente/**").hasRole("PACIENTE")
                         .requestMatchers("/doctor/**").hasRole("DOCTOR")

@@ -35,6 +35,7 @@
                         </c:if>
 
                         <form action="<c:url value='/do-login'/>" method="post">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                             <div class="mb-3">
                                 <label for="username" class="form-label"><i class="bi bi-envelope me-1"></i> Email</label>
                                 <input type="email" class="form-control" id="username" name="username"

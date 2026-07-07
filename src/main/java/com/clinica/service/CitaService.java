@@ -10,9 +10,13 @@ import java.util.Optional;
 
 public interface CitaService {
 
-    List<Cita> findCitasByPacienteId(Long pacienteId);
+    List<Cita> findCitasActivasByPacienteId(Long pacienteId);
 
-    List<Cita> findCitasByDoctorId(Long doctorId);
+    List<Cita> findHistorialCitasByPacienteId(Long pacienteId);
+
+    List<Cita> findCitasActivasByDoctorId(Long doctorId);
+
+    List<Cita> findHistorialCitasByDoctorId(Long doctorId);
 
     List<Cita> findCitasByDoctorIdAndEstado(Long doctorId, EstadoCita estado);
 
@@ -24,9 +28,13 @@ public interface CitaService {
 
     boolean confirmarCita(Long citaId, Long doctorId);
 
+    boolean completarCita(Long citaId, Long doctorId);
+
     boolean cancelarCitaByDoctor(Long citaId, Long doctorId);
 
     boolean isSlotDisponible(Long doctorId, LocalDate fecha, LocalTime hora);
+
+    boolean isHorarioAtencionValido(LocalDate fecha, LocalTime hora);
 
     List<LocalTime> getHorariosDisponibles();
 }

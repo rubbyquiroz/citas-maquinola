@@ -18,6 +18,7 @@
             <div class="navbar-nav ms-auto">
                 <a href="<c:url value='/doctor/dashboard'/>" class="nav-item nav-link text-light"><i class="bi bi-calendar3 me-1"></i>Mi Agenda</a>
                 <form action="<c:url value='/logout'/>" method="post" class="d-inline">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                     <button type="submit" class="btn btn-outline-light btn-sm ms-2"><i class="bi bi-box-arrow-right"></i> Cerrar Sesión</button>
                 </form>
             </div>
