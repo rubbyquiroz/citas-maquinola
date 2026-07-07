@@ -18,8 +18,8 @@
 .qwen/
 docs/
 
-# Maven Wrapper (downloaded)
-.mvn/wrapper/
+# Maven Wrapper (el .jar se descarga solo; maven-wrapper.properties SI se versiona)
+.mvn/wrapper/maven-wrapper.jar
 # Maven
 target/
 pom.xml.tag
@@ -30,7 +30,6 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
-.mvn/wrapper/maven-wrapper.jar
 
 # IDE - NetBeans
 nbproject/private/
