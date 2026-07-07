@@ -35,15 +35,15 @@ public class PacienteController {
     public String dashboard(Model model, Authentication auth) {
         Long pacienteId = getPacienteId(auth.getName());
         if (pacienteId == null) {
-            return "redirect:/login";
+            return "redirect:/signin";
         }
 
         Paciente paciente = usuarioService.findPacienteById(pacienteId).orElse(null);
         if (paciente == null) {
-            return "redirect:/login";
+            return "redirect:/signin";
         }
 
-        List<Cita> citasPendientes = citaService.findCitasByPacienteId(pacienteId);
+        List<Cita> citasPendientes = citaService.findCitasActivasByPacienteId(pacienteId);
 
         model.addAttribute("paciente", paciente);
         model.addAttribute("citas", citasPendientes);
@@ -54,7 +54,7 @@ public class PacienteController {
     public String mostrarAgendar(Model model, Authentication auth) {
         Long pacienteId = getPacienteId(auth.getName());
         if (pacienteId == null) {
-            return "redirect:/login";
+            return "redirect:/signin";
         }
 
         List<Doctor> doctores = usuarioService.findAllDoctores();
@@ -73,20 +73,25 @@ public class PacienteController {
                               RedirectAttributes redirectAttributes) {
         Long pacienteId = getPacienteId(auth.getName());
         if (pacienteId == null) {
-            return "redirect:/login";
+            return "redirect:/signin";
         }
 
         try {
             LocalDate fechaParsed = LocalDate.parse(fecha);
             LocalTime horaParsed = LocalTime.parse(hora);
 
-            if (fechaParsed.isBefore(LocalDate.now())) {
-                redirectAttributes.addFlashAttribute("error", "No puede agendar en fechas pasadas.");
+            if (usuarioService.findDoctorById(doctorId).isEmpty()) {
+                redirectAttributes.addFlashAttribute("error", "El doctor seleccionado no existe.");
+                return "redirect:/paciente/agendar";
+            }
+
+            if (!citaService.isHorarioAtencionValido(fechaParsed, horaParsed)) {
+                redirectAttributes.addFlashAttribute("error", "Solo puede agendar de lunes a viernes, de 9:00 a 17:00, en turnos de 30 minutos.");
                 return "redirect:/paciente/agendar";
             }
 
             if (!citaService.isSlotDisponible(doctorId, fechaParsed, horaParsed)) {
-                redirectAttributes.addFlashAttribute("error", "El horario seleccionado ya está ocupado.");
+                redirectAttributes.addFlashAttribute("error", "El horario seleccionado ya esta ocupado.");
                 return "redirect:/paciente/agendar";
             }
 
@@ -95,7 +100,10 @@ public class PacienteController {
             return "redirect:/paciente/dashboard";
 
         } catch (DateTimeParseException e) {
-            redirectAttributes.addFlashAttribute("error", "Formato de fecha u hora inválido.");
+            redirectAttributes.addFlashAttribute("error", "Formato de fecha u hora invalido.");
+            return "redirect:/paciente/agendar";
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/paciente/agendar";
         }
     }
@@ -104,10 +112,10 @@ public class PacienteController {
     public String misCitas(Model model, Authentication auth) {
         Long pacienteId = getPacienteId(auth.getName());
         if (pacienteId == null) {
-            return "redirect:/login";
+            return "redirect:/signin";
         }
 
-        List<Cita> citas = citaService.findCitasByPacienteId(pacienteId);
+        List<Cita> citas = citaService.findHistorialCitasByPacienteId(pacienteId);
         model.addAttribute("citas", citas);
         return "paciente/mis-citas";
     }
@@ -118,7 +126,7 @@ public class PacienteController {
                                RedirectAttributes redirectAttributes) {
         Long pacienteId = getPacienteId(auth.getName());
         if (pacienteId == null) {
-            return "redirect:/login";
+            return "redirect:/signin";
         }
 
         boolean resultado = citaService.cancelarCita(citaId, pacienteId);

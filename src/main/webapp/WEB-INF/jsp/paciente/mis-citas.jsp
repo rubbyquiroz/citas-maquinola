@@ -16,6 +16,7 @@
             <div class="navbar-nav ms-auto">
                 <a href="<c:url value='/paciente/dashboard'/>" class="nav-item nav-link text-light">Dashboard</a>
                 <form action="<c:url value='/logout'/>" method="post" class="d-inline">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                     <button type="submit" class="btn btn-outline-light btn-sm ms-2">Cerrar Sesión</button>
                 </form>
             </div>
@@ -75,6 +76,7 @@
                                         <td>
                                             <c:if test="${cita.estado eq 'PENDIENTE'}">
                                                 <form action="<c:url value='/paciente/cancelar-cita'/>" method="post" class="d-inline">
+                                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                                                     <input type="hidden" name="citaId" value="${cita.id}">
                                                     <button type="submit" class="btn btn-sm btn-danger"
                                                             onclick="return confirm('¿Está seguro de cancelar esta cita?')">

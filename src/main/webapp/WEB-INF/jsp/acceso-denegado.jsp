@@ -17,7 +17,7 @@
                         <h1 class="text-warning display-4">Acceso Denegado</h1>
                         <p class="lead text-muted">No tiene permiso para acceder a esta sección.</p>
                         <p class="text-muted">Necesita un perfil diferente para acceder aquí.</p>
-                        <a href="<c:url value='/login'/>" class="btn btn-primary mt-3">Volver al Login</a>
+                        <a href="<c:url value='/signin'/>" class="btn btn-primary mt-3">Volver al Login</a>
                     </div>
                 </div>
             </div>

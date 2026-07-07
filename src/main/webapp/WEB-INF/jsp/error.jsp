@@ -16,7 +16,7 @@
                     <div class="card-body p-5">
                         <h1 class="text-danger display-4">Error</h1>
                         <p class="lead text-muted">Ha ocurrido un error inesperado.</p>
-                        <a href="<c:url value='/login'/>" class="btn btn-primary mt-3">Volver al Login</a>
+                        <a href="<c:url value='/signin'/>" class="btn btn-primary mt-3">Volver al Login</a>
                     </div>
                 </div>
             </div>

@@ -16,6 +16,7 @@
             <div class="navbar-nav ms-auto">
                 <span class="nav-item nav-link text-light">Dr. ${doctor.nombre}</span>
                 <form action="<c:url value='/logout'/>" method="post" class="d-inline">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                     <button type="submit" class="btn btn-outline-light btn-sm ms-2">Cerrar Sesión</button>
                 </form>
             </div>
@@ -83,12 +84,21 @@
                                             <div class="btn-group btn-group-sm" role="group">
                                                 <c:if test="${cita.estado eq 'PENDIENTE'}">
                                                     <form action="<c:url value='/doctor/confirmar-cita'/>" method="post" class="d-inline">
+                                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                                                         <input type="hidden" name="citaId" value="${cita.id}">
                                                         <button type="submit" class="btn btn-success">Confirmar</button>
                                                     </form>
                                                 </c:if>
+                                                <c:if test="${cita.estado eq 'CONFIRMADA'}">
+                                                    <form action="<c:url value='/doctor/completar-cita'/>" method="post" class="d-inline">
+                                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+                                                        <input type="hidden" name="citaId" value="${cita.id}">
+                                                        <button type="submit" class="btn btn-primary">Completar</button>
+                                                    </form>
+                                                </c:if>
                                                 <c:if test="${cita.estado eq 'PENDIENTE' || cita.estado eq 'CONFIRMADA'}">
                                                     <form action="<c:url value='/doctor/cancelar-cita'/>" method="post" class="d-inline">
+                                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                                                         <input type="hidden" name="citaId" value="${cita.id}">
                                                         <button type="submit" class="btn btn-danger"
                                                                 onclick="return confirm('¿Está seguro de cancelar esta cita?')">
