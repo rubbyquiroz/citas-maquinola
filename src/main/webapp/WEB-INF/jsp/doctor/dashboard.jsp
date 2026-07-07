@@ -7,16 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Doctor - Clínica</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="<c:url value='/resources/css/custom.css'/>" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-success">
         <div class="container">
-            <a class="navbar-brand" href="<c:url value='/doctor/dashboard'/>">Clínica - Doctor</a>
-            <div class="navbar-nav ms-auto">
-                <span class="nav-item nav-link text-light">Dr. ${doctor.nombre}</span>
+            <a class="navbar-brand" href="<c:url value='/doctor/dashboard'/>"><i class="bi bi-clipboard2-pulse"></i> Clínica - Doctor</a>
+            <div class="navbar-nav ms-auto align-items-center">
+                <span class="nav-item nav-link text-light"><i class="bi bi-person-badge me-1"></i>Dr. ${doctor.nombre}</span>
                 <form action="<c:url value='/logout'/>" method="post" class="d-inline">
-                    <button type="submit" class="btn btn-outline-light btn-sm ms-2">Cerrar Sesión</button>
+                    <button type="submit" class="btn btn-outline-light btn-sm ms-2"><i class="bi bi-box-arrow-right"></i> Cerrar Sesión</button>
                 </form>
             </div>
         </div>
@@ -36,16 +38,21 @@
             </div>
         </c:if>
 
-        <h2 class="mb-4">Mi Agenda de Citas</h2>
+        <div class="page-header">
+            <h2><i class="bi bi-calendar3"></i> Mi Agenda de Citas</h2>
+        </div>
 
         <div class="card shadow">
             <div class="card-header bg-success text-white">
-                <h5 class="mb-0">Citas Programadas</h5>
+                <h5 class="mb-0"><i class="bi bi-journal-medical"></i> Citas Programadas</h5>
             </div>
             <div class="card-body">
                 <c:choose>
                     <c:when test="${empty citas}">
-                        <p class="text-muted text-center">No tiene citas programadas.</p>
+                        <div class="empty-state">
+                            <i class="bi bi-calendar-x"></i>
+                            No tiene citas programadas.
+                        </div>
                     </c:when>
                     <c:otherwise>
                         <table class="table table-striped table-hover">
@@ -84,7 +91,7 @@
                                                 <c:if test="${cita.estado eq 'PENDIENTE'}">
                                                     <form action="<c:url value='/doctor/confirmar-cita'/>" method="post" class="d-inline">
                                                         <input type="hidden" name="citaId" value="${cita.id}">
-                                                        <button type="submit" class="btn btn-success">Confirmar</button>
+                                                        <button type="submit" class="btn btn-success"><i class="bi bi-check-lg"></i> Confirmar</button>
                                                     </form>
                                                 </c:if>
                                                 <c:if test="${cita.estado eq 'PENDIENTE' || cita.estado eq 'CONFIRMADA'}">
@@ -92,12 +99,12 @@
                                                         <input type="hidden" name="citaId" value="${cita.id}">
                                                         <button type="submit" class="btn btn-danger"
                                                                 onclick="return confirm('¿Está seguro de cancelar esta cita?')">
-                                                            Cancelar
+                                                            <i class="bi bi-x-lg"></i> Cancelar
                                                         </button>
                                                     </form>
                                                 </c:if>
                                                 <a href="<c:url value='/doctor/paciente/${cita.pacienteId}'/>" class="btn btn-outline-primary">
-                                                    Ver Paciente
+                                                    <i class="bi bi-eye"></i> Ver Paciente
                                                 </a>
                                             </div>
                                         </td>

@@ -1,18 +1,246 @@
-/* Custom styles for Clinica Citas */
+/* ===================================================================
+   Clínica - Gestión de Citas Médicas
+   Tema visual: paleta clínica (teal/azul), tipografía Poppins + Inter
+   =================================================================== */
 
-body {
-    background-color: #f8f9fa;
+:root {
+    --clinica-primary: #2563eb;
+    --clinica-primary-dark: #1d4ed8;
+    --clinica-teal: #0d9488;
+    --clinica-teal-dark: #0f766e;
+    --clinica-bg: #f4f7fb;
+    --clinica-card-radius: 1rem;
+
+    --bs-primary: var(--clinica-primary);
+    --bs-primary-rgb: 37, 99, 235;
+    --bs-success: var(--clinica-teal);
+    --bs-success-rgb: 13, 148, 136;
 }
 
+/* ---------- Tipografía ---------- */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--clinica-bg);
+    background-image:
+        radial-gradient(circle at 10% 0%, rgba(37, 99, 235, 0.06) 0%, transparent 45%),
+        radial-gradient(circle at 90% 100%, rgba(13, 148, 136, 0.06) 0%, transparent 45%);
+    min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, .navbar-brand {
+    font-family: 'Poppins', 'Inter', sans-serif;
+    font-weight: 600;
+}
+
+/* ---------- Navbar ---------- */
+.navbar {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.navbar.bg-primary {
+    background: linear-gradient(135deg, var(--clinica-primary) 0%, var(--clinica-primary-dark) 100%) !important;
+}
+
+.navbar.bg-success {
+    background: linear-gradient(135deg, var(--clinica-teal) 0%, var(--clinica-teal-dark) 100%) !important;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    letter-spacing: 0.2px;
+}
+
+.navbar-brand .bi {
+    font-size: 1.3rem;
+}
+
+/* ---------- Encabezado de página ---------- */
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.75rem;
+}
+
+.page-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0;
+    color: #1e293b;
+}
+
+.page-header h2 .bi {
+    color: var(--clinica-primary);
+}
+
+/* ---------- Tarjetas ---------- */
 .card {
     border: none;
-    border-radius: 0.5rem;
+    border-radius: var(--clinica-card-radius);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card.shadow {
+    box-shadow: 0 4px 20px rgba(30, 41, 59, 0.08) !important;
+}
+
+.card-header {
+    border-radius: var(--clinica-card-radius) var(--clinica-card-radius) 0 0 !important;
+    border-bottom: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.card-header.bg-primary {
+    background: linear-gradient(135deg, var(--clinica-primary) 0%, var(--clinica-primary-dark) 100%) !important;
+}
+
+.card-header.bg-success {
+    background: linear-gradient(135deg, var(--clinica-teal) 0%, var(--clinica-teal-dark) 100%) !important;
+}
+
+/* ---------- Botones ---------- */
+.btn {
+    border-radius: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--clinica-primary) 0%, var(--clinica-primary-dark) 100%);
+    border: none;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--clinica-teal) 0%, var(--clinica-teal-dark) 100%);
+    border: none;
+}
+
+.btn-lg {
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+}
+
+/* ---------- Formularios ---------- */
+.form-control, .form-select {
+    border-radius: 0.6rem;
+    border: 1px solid #dbe3ef;
+    padding: 0.55rem 0.9rem;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--clinica-primary);
+    box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.15);
+}
+
+.form-label {
+    font-weight: 500;
+    color: #334155;
+}
+
+/* ---------- Tablas ---------- */
+.table {
+    border-radius: 0.75rem;
+    overflow: hidden;
 }
 
 .table th {
     font-weight: 600;
+    color: #475569;
+    border-bottom: 2px solid #e2e8f0;
+    background-color: #f8fafc;
 }
 
+.table td {
+    vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(37, 99, 235, 0.04);
+}
+
+/* ---------- Badges de estado ---------- */
 .badge {
-    min-width: 90px;
+    min-width: 100px;
+    padding: 0.5em 0.8em;
+    border-radius: 50rem;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+/* ---------- Estado vacío ---------- */
+.empty-state {
+    text-align: center;
+    padding: 2.5rem 1rem;
+    color: #94a3b8;
+}
+
+.empty-state .bi {
+    font-size: 2.75rem;
+    display: block;
+    margin-bottom: 0.75rem;
+    color: #cbd5e1;
+}
+
+/* ---------- Login ---------- */
+.login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.login-icon-circle {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--clinica-primary) 0%, var(--clinica-teal) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+}
+
+.login-icon-circle .bi {
+    font-size: 2rem;
+    color: white;
+}
+
+.login-card {
+    animation: fadeInUp 0.4s ease;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Alertas ---------- */
+.alert {
+    border: none;
+    border-radius: 0.75rem;
+}
+
+/* ---------- Detalle de contacto (íconos inline) ---------- */
+.info-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.info-row .bi {
+    color: var(--clinica-primary);
+    width: 1.2rem;
+    text-align: center;
 }
